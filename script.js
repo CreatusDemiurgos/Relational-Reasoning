@@ -36,10 +36,10 @@ function displayRandomShape(){
     cntx2.clearRect(0, 0, canvas2.width, canvas2.height);
     const randomIndex2 = Math.floor(Math.random() * shapeGenerators.length);
     shapeGenerators[randomIndex2](cntx2);
-    const randomIndexPhrase = Math.floor(Math.random * twoCanvasComparisonPhrases.length);
-    let finalPhrase = shapeName[randomIndex] + twoCanvasComparisonPhrases[randomIndexPhrase] + shapeName[randomIndex2]
-    let paragraph = document.getElementById("comparison statement");
-    paragraph.textContent(finalPhrase);
+    const randomIndexPhrase = Math.floor(Math.random() * twoCanvasComparisonPhrases.length);
+    var finalPhrase = shapeName[randomIndex] + twoCanvasComparisonPhrases[randomIndexPhrase] + shapeName[randomIndex2]
+    var paragraph = document.getElementById("statement");
+    paragraph.textContent = finalPhrase;
 }
 
 
