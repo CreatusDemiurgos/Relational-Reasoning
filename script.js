@@ -5,6 +5,11 @@ const cntx = canvas.getContext("2d");
 
 const canvas2 = document.getElementById("canvas2");
 const cntx2 = canvas2.getContext("2d");
+
+const tableScore = document.getElementById("score");
+const tableName = document.getElementById("name");
+let score = 0;
+
 let right;
 let left;
 let randomIndexPhrase;
@@ -26,8 +31,8 @@ const shapeName = ["triangle ", "square ", "rectangle ", "pentagon ", "hexagon "
 const twoCanvasComparisonPhrases = [
         "is west of ",
         "is east of ",
-        "is at the left of ",
-        "is at the right of "        
+        "is to the left of ",
+        "is to the right of "        
 ];
 
 function comparisonPosition(buttonClicked){
@@ -48,15 +53,13 @@ function comparisonPosition(buttonClicked){
     }
 
     if(buttonClicked === statementVeracity){
-        console.log("CORRECT!");
+        score += 1;
+        tableScore.textContent = score;
     }else{
-        console.log("FALSE!");
+        score -= 1;
+        tableScore.textContent = score;
     }
-    debugger;
 }
-
-
-
 
 function displayRandomShape(){
     cntx.clearRect(0, 0, canvas.width, canvas.height);
@@ -81,12 +84,23 @@ function displayRandomShape(){
     paragraph.textContent = finalPhrase;
 }
 
+
+//This lines of code are going to be run when the full page loads, they  ask for the username (useful for the future when I need to store data and link it with a
+// user) and they display the  first shapes
+displayRandomShape();
+var userInput = 0;
+userInput = prompt("Enter your username");
+tableName.textContent = userInput;
+
+
+
 function handleButtonClick(buttonClicked){
+    //the comparison function NEED to be before display random shapes. This is due to the fact that we need to first compare
+    //the displayed objects, then generate new ones.
     comparisonPosition(buttonClicked);
     displayRandomShape();
     
 }
-
 
 document.getElementById("falseBtn").addEventListener("click", function(){handleButtonClick(2)});
 document.getElementById("trueBtn").addEventListener("click", function(){handleButtonClick(1)}); 
