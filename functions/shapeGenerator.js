@@ -8,64 +8,74 @@ class ShapeGenerator {
         return color;
     }
 
-    makeTriangle(ctx) {
+    makeTriangle(ctx, containerWidth, containerHeight) {
         let randColor = this.getRandomColor();
         ctx.beginPath();
-        ctx.moveTo(150, 50);
-        ctx.lineTo(250, 250);
-        ctx.lineTo(50, 250);
+        ctx.moveTo(containerWidth / 4, containerHeight / 4);
+        ctx.lineTo((3 * containerWidth) / 4, containerHeight / 4);
+        ctx.lineTo(containerWidth / 2, (3 * containerHeight) / 4);
         ctx.closePath();
         ctx.fillStyle = randColor;
         ctx.fill();
     }
 
-    makeSquare(ctx) {
+    makeSquare(ctx, containerWidth, containerHeight) {
         let randColor = this.getRandomColor();
         ctx.beginPath();
-        ctx.rect(50, 50, 200, 200); // x, y, width, height
+        ctx.rect(containerWidth / 4, containerHeight / 4, containerWidth / 2, containerHeight / 2);
         ctx.fillStyle = randColor;
         ctx.fill();
     }
 
-    makeRectangle(ctx) {
+    makeRectangle(ctx, containerWidth, containerHeight) {
         let randColor = this.getRandomColor();
         ctx.beginPath();
-        ctx.rect(50, 50, 200, 100); // x, y, width, height
+        ctx.rect(containerWidth / 8, 1*containerHeight / 4, 3*containerWidth / 4, containerHeight / 2);
         ctx.fillStyle = randColor;
         ctx.fill();
     }
 
-    makeHexagon(ctx) {
+    makePentagon(ctx, containerWidth, containerHeight) {
         let randColor = this.getRandomColor();
+        const sideLength = containerWidth/3.5;
+        const centerX = containerWidth /2;
+        const centerY = containerHeight/2;
+        const pentagonDegree = 108*(Math.PI/180);
         ctx.beginPath();
-        ctx.moveTo(150, 50);
-        ctx.lineTo(250, 100);
-        ctx.lineTo(250, 200);
-        ctx.lineTo(150, 250);
-        ctx.lineTo(50, 200);
-        ctx.lineTo(50, 100);
+        for(let i = 0; i < 5; i++){
+            const angle = (1/2)*Math.PI + (i * 2 * Math.PI)/5;
+            const x = centerX + sideLength * Math.cos(angle);
+            const y = centerY + sideLength * Math.sin(angle);
+            ctx.lineTo(x, y);
+        }
         ctx.closePath();
         ctx.fillStyle = randColor;
         ctx.fill();
     }
 
-    makePentagon(ctx) {
-        let randColor = this.getRandomColor();
-        ctx.beginPath();
-        ctx.moveTo(150, 50);
-        ctx.lineTo(250, 100);
-        ctx.lineTo(200, 250);
-        ctx.lineTo(100, 250);
-        ctx.lineTo(50, 100);
-        ctx.closePath();
-        ctx.fillStyle = randColor;
-        ctx.fill();
-    }
 
-    makeCircle(ctx) {
+    makeHexagon(ctx, containerWidth, containerHeight) {
+    let randColor = this.getRandomColor();
+    ctx.beginPath();
+    const sideLength = containerWidth / 4; // Adjust as needed
+    const centerX = containerWidth / 2;
+    const centerY = containerHeight / 2;
+
+    for (let i = 0; i < 6; i++) {
+        const angle = (i * 2 * Math.PI) / 6;
+        const x = centerX + sideLength * Math.cos(angle);
+        const y = centerY + sideLength * Math.sin(angle);
+        ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.fillStyle = randColor;
+    ctx.fill();
+}
+
+    makeCircle(ctx, containerWidth, containerHeight) {
         let randColor = this.getRandomColor();
         ctx.beginPath();
-        ctx.arc(150, 150, 125, 0, 2 * Math.PI); // x, y, radius, start angle, end angle
+        ctx.arc(containerWidth / 2, containerHeight / 2, containerWidth / 2.5, 0, 2 * Math.PI);
         ctx.fillStyle = randColor;
         ctx.fill();
     }

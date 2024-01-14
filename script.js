@@ -65,11 +65,11 @@ function displayRandomShape(){
     cntx.clearRect(0, 0, canvas.width, canvas.height);
     const randomIndex = Math.floor(Math.random() * shapeGenerators.length);
     left = randomIndex;
-    shapeGenerators[randomIndex](cntx);
+    shapeGenerators[randomIndex](cntx, canvas.width, canvas.height);
     cntx2.clearRect(0, 0, canvas2.width, canvas2.height);
     const randomIndex2 = Math.floor(Math.random() * shapeGenerators.length);
     right = randomIndex2;
-    shapeGenerators[randomIndex2](cntx2);
+    shapeGenerators[randomIndex2](cntx2, canvas2.width, canvas2.height);
     randomIndexPhrase = Math.floor(Math.random() * twoCanvasComparisonPhrases.length);
     const randomPhraseTypeChooser = Math.floor(Math.random());
     let finalPhrase;
