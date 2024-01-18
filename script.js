@@ -2,12 +2,18 @@ import ShapeGenerator from './functions/shapeGenerator.js';
 
 const canvas = document.getElementById("canvas1");
 const cntx = canvas.getContext("2d");
+canvas.width= innerWidth/4;
+canvas.height= innerWidth/4;
 
 const canvas2 = document.getElementById("canvas2");
 const cntx2 = canvas2.getContext("2d");
+canvas2.width= innerWidth/4;
+canvas2.height= innerWidth/4;
 
 const canvas3 = document.getElementById("canvas3");
 const cntx3 = canvas3.getContext("2d");
+canvas3.width= innerWidth/4;
+canvas3.height= innerWidth/4;
 
 const tableScore = document.getElementById("score");
 const tableName = document.getElementById("name");
@@ -40,7 +46,7 @@ const twoCanvasComparisonPhrases = [
         "is to the right of ",
         "is not east of ",
         "is not west of ",
-        "is not to the right of",
+        "is not to the right of ",
         "is not the left of "      
 ];
 
@@ -62,7 +68,7 @@ const oneCanvasComparisonPhrases = [
 
 function comparisons(buttonClicked){
     let statementVeracity;
-    if(displayRandomComparison === 0 || displayRandomComparison === 1){
+    if(displayRandomComparison === 1){
         if((randomIndexOneCanvas % 2) === 0){
             if(phraseTypeChosen === 1){
                 statementVeracity = 1;
@@ -70,6 +76,20 @@ function comparisons(buttonClicked){
                 statementVeracity = 2;
             }
         }else if((randomIndexOneCanvas % 2) === 1){
+            if(phraseTypeChosen === 1){
+                statementVeracity = 2;
+            }else if(phraseTypeChosen === 2){
+                statementVeracity = 1;
+            }
+        }
+    }else if(displayRandomComparison === 0){
+        if((randomIndexPhrase % 2) === 0){
+            if(phraseTypeChosen === 1){
+                statementVeracity = 1;
+            }else if(phraseTypeChosen === 2){
+                statementVeracity = 2;
+            }
+        }else if((randomIndexPhrase % 2) === 1){
             if(phraseTypeChosen === 1){
                 statementVeracity = 2;
             }else if(phraseTypeChosen === 2){
@@ -89,19 +109,7 @@ function comparisons(buttonClicked){
 function comparisonPosition(buttonClicked){
     //checking if the phrase stated is ture or false. If it is true then its equal to 1, if its false its equal to 2
     let statementVeracity;
-    if((randomIndexPhrase % 2) === 0){
-        if(phraseTypeChosen === 1){
-            statementVeracity = 1;
-        }else if(phraseTypeChosen === 2){
-            statementVeracity = 2;
-        }
-    }else if((randomIndexPhrase % 2) === 1){
-        if(phraseTypeChosen === 1){
-            statementVeracity = 2;
-        }else if(phraseTypeChosen === 2){
-            statementVeracity = 1;
-        }
-    }
+    
     if(buttonClicked === statementVeracity){
         score += 1;
         tableScore.textContent = score;
@@ -114,7 +122,10 @@ function comparisonPosition(buttonClicked){
 function displayRandomShape(){
     displayRandomComparison = Math.floor(Math.random() * 2);
     const randomIndex = Math.floor(Math.random() * shapeGenerators.length);
-    const randomIndex2 = Math.floor(Math.random() * shapeGenerators.length);
+    let randomIndex2;
+    do {
+        randomIndex2 = Math.floor(Math.random() * shapeGenerators.length);
+      } while (randomIndex2 === randomIndex);
     const randomPhraseTypeChooser = Math.floor(Math.random() * 2);
     let finalPhrase;
     if(displayRandomComparison === 0){
