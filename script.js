@@ -19,12 +19,13 @@ const tableScore = document.getElementById("score");
 const tableName = document.getElementById("name");
 let score = 0;
 
-let right;
-let left;
 let randomIndexPhrase;
 let randomIndexOneCanvas;
-let phraseTypeChosen;
+let randomIndexColorPhrase;
+let randomPhraseTypeChooser;
 let displayRandomComparison;
+let colorChoosen;
+let colorChoosen2;
 
 const shapeGenerator = new ShapeGenerator();
 
@@ -51,50 +52,60 @@ const twoCanvasComparisonPhrases = [
 ];
 
 const oneCanvasComparisonPhrases = [
-    "is inside of ",
     "is outside of ",
-    "is not outside of ",
+    "is inside of ",
     "is not inside of ",
-    "is englobed by ",
+    "is not outside of ",
     "is englobing ",
-    "is encapsulated by ",
+    "is englobed by ",
     "is encapsulating ",
-    "is bounded by ",
+    "is encapsulated by ",
     "is bounding ",
+    "is bounded by ",
+    "is not encompassed by",
     "is not encompassing ",
-    "is not encompassed by"
+];
+
+const colorComparisons = [
+    "is lighter than ",
+    "is darker than ",
+    "is not darker than ",
+    "is not lighter than ",
+    "have the same color as "
 ];
 
 
 function comparisons(buttonClicked){
     let statementVeracity;
-    if(displayRandomComparison === 1){
-        if((randomIndexOneCanvas % 2) === 0){
-            if(phraseTypeChosen === 1){
-                statementVeracity = 1;
-            }else if(phraseTypeChosen === 2){
-                statementVeracity = 2;
-            }
-        }else if((randomIndexOneCanvas % 2) === 1){
-            if(phraseTypeChosen === 1){
-                statementVeracity = 2;
-            }else if(phraseTypeChosen === 2){
-                statementVeracity = 1;
-            }
+    if(displayRandomComparison === 0){
+        switch(randomPhraseTypeChooser){
+            case(0):
+                statementVeracity = trueOrFalse("1st2nd", randomIndexPhrase % 2);
+                break;
+            case(1):
+                statementVeracity = trueOrFalse("2nd1st", randomIndexPhrase % 2);
+                break;
+            case(2):
+                statementVeracity = colorComparison(colorChoosen[0], colorChoosen2[0], "1st2nd", randomIndexColorPhrase);
+                break;
+            case(3):
+                statementVeracity = colorComparison(colorChoosen[0], colorChoosen2[0], "2nd1st", randomIndexColorPhrase);
+                break;
         }
-    }else if(displayRandomComparison === 0){
-        if((randomIndexPhrase % 2) === 0){
-            if(phraseTypeChosen === 1){
-                statementVeracity = 1;
-            }else if(phraseTypeChosen === 2){
-                statementVeracity = 2;
-            }
-        }else if((randomIndexPhrase % 2) === 1){
-            if(phraseTypeChosen === 1){
-                statementVeracity = 2;
-            }else if(phraseTypeChosen === 2){
-                statementVeracity = 1;
-            }
+    }else if(displayRandomComparison === 1){
+        switch(randomPhraseTypeChooser){
+            case(0):
+                statementVeracity = trueOrFalse("1st2nd", randomIndexOneCanvas % 2);
+                break;
+            case(1):
+                statementVeracity = trueOrFalse("2nd1st", randomIndexOneCanvas % 2);
+                break;
+            case(2):
+                statementVeracity = colorComparison(colorChoosen[0], colorChoosen2[0], "1st2nd", randomIndexColorPhrase);
+                break;
+            case(3):
+                statementVeracity = colorComparison(colorChoosen[0], colorChoosen2[0], "2nd1st", randomIndexColorPhrase);
+                break;
         }
     }
     if(buttonClicked === statementVeracity){
@@ -106,18 +117,6 @@ function comparisons(buttonClicked){
     }
 }
 
-function comparisonPosition(buttonClicked){
-    //checking if the phrase stated is ture or false. If it is true then its equal to 1, if its false its equal to 2
-    let statementVeracity;
-    
-    if(buttonClicked === statementVeracity){
-        score += 1;
-        tableScore.textContent = score;
-    }else{
-        score -= 1;
-        tableScore.textContent = score;
-    }
-}
 
 function displayRandomShape(){
     displayRandomComparison = Math.floor(Math.random() * 2);
@@ -126,41 +125,117 @@ function displayRandomShape(){
     do {
         randomIndex2 = Math.floor(Math.random() * shapeGenerators.length);
       } while (randomIndex2 === randomIndex);
-    const randomPhraseTypeChooser = Math.floor(Math.random() * 2);
+    randomPhraseTypeChooser = Math.floor(Math.random() * 2);
     let finalPhrase;
     if(displayRandomComparison === 0){
         cntx.clearRect(0, 0, canvas.width, canvas.height);
         cntx2.clearRect(0, 0, canvas2.width, canvas2.height);
         cntx3.clearRect(0, 0, canvas3.width, canvas3.height);
-        shapeGenerators[randomIndex](cntx, canvas.width, canvas.height, 1);
-        shapeGenerators[randomIndex2](cntx2, canvas2.width, canvas2.height, 1);
-        randomIndexPhrase = Math.floor(Math.random() * twoCanvasComparisonPhrases.length);
-        if(randomPhraseTypeChooser === 0){
-            finalPhrase = shapeName[randomIndex] + twoCanvasComparisonPhrases[randomIndexPhrase] + shapeName[randomIndex2];
-            phraseTypeChosen = 1;
+        colorChoosen = shapeGenerators[randomIndex](cntx, canvas.width, canvas.height, 1);
+        colorChoosen2 = shapeGenerators[randomIndex2](cntx2, canvas2.width, canvas2.height, 1);
+        if(colorChoosen[1] === colorChoosen2[1]){
+            randomPhraseTypeChooser = 2 + Math.floor(Math.random() * 2);
+            randomIndexColorPhrase = Math.floor(Math.random() * colorComparisons.length);
         }else{
-            finalPhrase = shapeName[randomIndex2] + twoCanvasComparisonPhrases[randomIndexPhrase] + shapeName[randomIndex];
-            phraseTypeChosen = 2;
+            randomPhraseTypeChooser = Math.floor(Math.random() * 2);
+            randomIndexPhrase = Math.floor(Math.random() * twoCanvasComparisonPhrases.length);
+        }
+        switch(randomPhraseTypeChooser){
+            case(0):
+                finalPhrase = shapeName[randomIndex] + twoCanvasComparisonPhrases[randomIndexPhrase]  + shapeName[randomIndex2];
+                break;
+            case(1):
+                finalPhrase = shapeName[randomIndex2] + twoCanvasComparisonPhrases[randomIndexPhrase]  + shapeName[randomIndex];
+                break;
+            case(2):
+                finalPhrase = shapeName[randomIndex] + colorComparisons[randomIndexColorPhrase] + shapeName[randomIndex2];
+                break;
+            case(3):
+                finalPhrase = shapeName[randomIndex2] + colorComparisons[randomIndexColorPhrase] + shapeName[randomIndex];
+                break;
         }
     }else if(displayRandomComparison === 1){
         cntx.clearRect(0, 0, canvas.width, canvas.height);
         cntx2.clearRect(0, 0, canvas2.width, canvas2.height);
         cntx3.clearRect(0, 0, canvas3.width, canvas3.height);
-        shapeGenerators[randomIndex](cntx3, canvas3.width, canvas3.height, 1);
-        shapeGenerators[randomIndex2](cntx3, canvas3.width, canvas3.height, 3);
-        randomIndexOneCanvas = Math.floor(Math.random() * oneCanvasComparisonPhrases.length);
-        if(randomPhraseTypeChooser === 0){
-            finalPhrase = shapeName[randomIndex2] + oneCanvasComparisonPhrases[randomIndexOneCanvas] + shapeName[randomIndex];
-            phraseTypeChosen = 1;
+        colorChoosen = shapeGenerators[randomIndex](cntx3, canvas3.width, canvas3.height, 1);
+        colorChoosen2 = shapeGenerators[randomIndex2](cntx3, canvas3.width, canvas3.height, 3);
+        if(colorChoosen[1] === colorChoosen2[1]){
+            randomPhraseTypeChooser = 2 + Math.floor(Math.random() * 2);
+            randomIndexColorPhrase = Math.floor(Math.random() * colorComparisons.length);
         }else{
-            finalPhrase = shapeName[randomIndex] + oneCanvasComparisonPhrases[randomIndexOneCanvas] + shapeName[randomIndex2];
-            phraseTypeChosen = 2;
+            randomPhraseTypeChooser = Math.floor(Math.random() * 2);
+            randomIndexOneCanvas = Math.floor(Math.random() * oneCanvasComparisonPhrases.length);
+        }
+        switch(randomPhraseTypeChooser){
+            case(0):
+                finalPhrase = shapeName[randomIndex] + oneCanvasComparisonPhrases[randomIndexOneCanvas] + shapeName[randomIndex2];
+                break;
+            case(1):
+                finalPhrase = shapeName[randomIndex2] + oneCanvasComparisonPhrases[randomIndexOneCanvas] + shapeName[randomIndex];
+                break;
+            case(2):
+                finalPhrase = shapeName[randomIndex] + colorComparisons[randomIndexColorPhrase] + shapeName[randomIndex2];
+                break;
+            case(3):
+                finalPhrase = shapeName[randomIndex2] + colorComparisons[randomIndexColorPhrase] + shapeName[randomIndex];
+                break;
         }
     }
     var paragraph = document.getElementById("statement");
     paragraph.textContent = finalPhrase;    
 }
 
+function colorComparison(shadeFirstShape, shadeSecondShape, phraseChoosen, phraseNumber){
+    if(phraseNumber === 4){
+        if((shadeFirstShape === shadeSecondShape)){
+            return 1;
+        }else{
+            return 2;
+        }
+    }
+    if((shadeFirstShape === "dark") && (shadeSecondShape === "light")){
+        if(phraseChoosen === "1st2nd"){
+            if(phraseNumber % 2 === 1){
+                return 1;
+            }else if(phraseNumber % 2 === 0){
+                return 2;
+            }
+        }else if(phraseChoosen === "2nd1st"){
+            if(phraseNumber % 2 === 0){
+                return 1;
+            }else if(phraseNumber  %2 === 1){
+                return 2;
+            }
+        }
+    }else if((shadeFirstShape === "light") && (shadeSecondShape === "dark")){
+        if(phraseChoosen === "1st2nd"){
+            return trueOrFalse("1st2nd", phraseNumber % 2);
+        }else if(phraseChoosen === "2nd1st"){
+            return trueOrFalse("2nd1st", phraseNumber % 2);
+        }
+    }else if(shadeFirstShape === shadeSecondShape){
+        if(phraseNumber === 2 || phraseNumber === 3){
+            return 1;
+        }else{
+            return 2;
+        }
+        
+    }
+} 
+function trueOrFalse(phraseChoosen, phraseType){
+    if((phraseChoosen === "1st2nd") && phraseType === 0){
+        return 1;
+    }else if((phraseChoosen === "1st2nd") && phraseType === 1){
+        return 2;
+    }else if((phraseChoosen === "2nd1st") && phraseType === 0){
+        return 2;
+    }else if((phraseChoosen === "2nd1st") && phraseType === 1){
+        return 1;
+    }else{
+        console.error("Comparison not as it should be");
+    }
+} 
 
 //This lines of code are going to be run when the full page loads, they  ask for the username (useful for the future when I need to store data and link it with a
 // user) and they display the  first shapes

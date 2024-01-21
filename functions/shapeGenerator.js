@@ -1,19 +1,41 @@
 class ShapeGenerator {
     getRandomColor() {
         const preSetColors = [
-            "#0007ff", //blue
             "#00fffc", //light blue
+            "#0007ff", //dark blue
             "#fa8c8c", //light red and pink
             "#c90004", //somewhat red
             "#fffe00", //light yellow
             "#b98d00", //dark yellow?
             "#1afe01", //light green/lime
-            "0b6d01" //dark greens
+            "#0b6d01" //dark greens
         ];
         const randomIndex = Math.floor(Math.random() * preSetColors.length); 
 
         return preSetColors[randomIndex];
     }
+
+    processColor(color) {
+        if(color === "#00fffc"){
+            return ["light", "blue"]; 
+        }else if(color ==="#0007ff"){
+            return ["dark", "blue"];
+        }else if(color ==="#fa8c8c"){
+            return ["light", "red"];
+        }else if(color ==="#c90004"){
+            return ["dark", "red"];
+        }else if(color ==="#fffe00"){
+            return ["light", "yellow"];
+        }else if(color ==="#b98d00"){
+            return ["dark", "yellow"];
+        }else if(color ==="#1afe01"){
+            return ["light", "green"];
+        }else if(color ==="#0b6d01" ){
+            return ["dark", "green"];
+        }else{
+            console.error("color not on the list");
+        }
+      }
 
     generateRegularPols(ctx, containerWidth, containerHeight,sizeChager, sides){
         let randColor = this.getRandomColor();
@@ -34,15 +56,18 @@ class ShapeGenerator {
         ctx.lineWidth = 2;
         ctx.stroke();
         ctx.fill();
+        return this.processColor(randColor);
     }
 
     // the size is a value that is used when we want a shape to be inside another one, so we want the inner shapes to be smaller
     makeTriangle(ctx, containerWidth, containerHeight, sizeChager) {
-        this.generateRegularPols(ctx, containerWidth, containerHeight,sizeChager, 3);
+        let randColor = this.generateRegularPols(ctx, containerWidth, containerHeight,sizeChager, 3);
+        return randColor;
     }
 
     makeSquare(ctx, containerWidth, containerHeight, sizeChager) {
-        this.generateRegularPols(ctx, containerWidth, containerHeight,sizeChager, 4);
+        let randColor = this.generateRegularPols(ctx, containerWidth, containerHeight,sizeChager, 4);
+        return randColor;
     }
 
     makeRectangle(ctx, containerWidth, containerHeight, sizeChager) {
@@ -54,15 +79,18 @@ class ShapeGenerator {
         ctx.lineWidth = 2;
         ctx.stroke();
         ctx.fill();
+        return this.processColor(randColor);
     }
 
     makePentagon(ctx, containerWidth, containerHeight, sizeChager) {
-        this.generateRegularPols(ctx, containerWidth, containerHeight,sizeChager, 5);
+        let randColor = this.generateRegularPols(ctx, containerWidth, containerHeight,sizeChager, 5);
+        return randColor;
     }
 
 
     makeHexagon(ctx, containerWidth, containerHeight, sizeChager) {
-        this.generateRegularPols(ctx, containerWidth, containerHeight,sizeChager, 6);
+        let randColor = this.generateRegularPols(ctx, containerWidth, containerHeight,sizeChager, 6);
+        return randColor;
 }
 
     makeCircle(ctx, containerWidth, containerHeight, sizeChager) {
@@ -74,7 +102,7 @@ class ShapeGenerator {
         ctx.lineWidth = 2;
         ctx.stroke();
         ctx.fill();
-        
+        return this.processColor(randColor);
     }
 }
 
