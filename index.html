@@ -2,55 +2,98 @@
 <html>
     <head>
         <link href = "style.css" rel="stylesheet"/>
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
         <meta charset="UTF-8">
         <meta name="viewport" content = "width=device-width, initial-scale=1.0">
         <title>
             For God
-        </title>
+        </title> 
     </head>
     <body>
-        <h1></h1>
-        <h2>To the <strong>GREATEST</strong> brain training site <strong>EVER</strong></h2>
-        <!-- this is a documentation, they couldve just used the double slashes smh-->
-        <!--<button>Change USER!</button>-->
-        <p id="statement" style="font-size: 20px">THE SHAPE ON THE LEFT HAS MORE SIDES THAN THE ONE IN THE RIGHT</p>
-        <div class = "row">
-            <div class = "col-4 center-content">
-                <canvas id="canvas1"></canvas>
-            </div>
-            <div class = "col-4 center-content">
-                <canvas id="canvas3"></canvas>
-            </div>
-            <div class = "col-4 center-content">
-                <canvas id="canvas2"></canvas>
-            </div>
+        <div id="introPage">
+            <nav>
+                <div class="sidebar-top">
+                    <span class="icons">
+                        <i class='bx bx-brain' ></i>
+                        <!-- <i class='bx bx-chevron-left' ></i> -->
+                    </span>
+                    <h3>Relational Reasoning</h3>
+                </div>
+                <div class="timer">
+                    <span class="icons">
+                        <i class='bx bx-timer' ></i>
+                    </span>
+                    <h4>Timer</h4>
+                    <input type="checkbox" id="myCheckbox">
+                </div>
+                <div class="timerOn", id="t1">
+                    <div id="hour" class="time">
+                        <i class='bx bx-chevron-up' id="chevronUpH" ></i>
+                        <input type="number" value = "0" id="inputH" class="auto-select">
+                        <i class='bx bx-chevron-down' id="chevronDownH" ></i>
+                    </div>
+                    <div id="minutes" class="time">
+                        <i class='bx bx-chevron-up' id="chevronUpM"></i>
+                        <input type="number" value = "0" id="inputM" class="auto-select">
+                        <i class='bx bx-chevron-down' id="chevronDownM"></i>
+                    </div>
+                    <div id="seconds"  class="time">
+                        <i class='bx bx-chevron-up' id="chevronUpS"></i>
+                        <input type="number"  value = "0" id="inputS" class="auto-select">
+                        <i class='bx bx-chevron-down' id="chevronDownS"></i>
+                    </div>
+                </div>
+            </nav>
+            <main>
+                <div>
+                    <h1><strong>WELCOME</strong></h1>
+                    <h2>To the <strong>GREATEST</strong> brain training site <strong>EVER</strong></h2>
+                    <button id="startBtn">START!</button>
+                </div>
+            </main>
         </div>
-        <div class="row">
-            <div class = "col-6 right-content">
-                <button id="trueBtn">TRUE</button>
+        <div id="bt" class="hidden">
+            <i class='bx bx-x'  style="color:red; font-size: 2.5em; text-shadow: none;" id="exit"></i>
+            <p id="statement">THE SHAPE ON THE LEFT HAS MORE SIDES THAN THE ONE ON THE RIGHT</p>
+            <div class = "row">
+                <div class = "col-4 center-content">
+                    <canvas id="canvas1"></canvas>
+                </div>
+                <div class = "col-4 center-content">
+                    <canvas id="canvas3"></canvas>
+                </div>
+                <div class = "col-4 center-content">
+                    <canvas id="canvas2"></canvas>
+                </div>
             </div>
-            <div class = "col-6 left-content">
-                <button id="falseBtn"> FALSE</button>
+            <div class="row">
+                <div class = "col-6 right-content">
+                    <button id="trueBtn">TRUE</button>
+                </div>
+                <div class = "col-6 left-content">
+                    <button id="falseBtn"> FALSE</button>
+                </div>
             </div>
+            <table class="bottom-left">
+                <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                           User Score 
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id = name>Score</td>
+                        <td id = score>0</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <table class="bottom-left">
-            <thead>
-                <tr>
-                    <th>
-                        Name
-                    </th>
-                    <th>
-                       User Score 
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td id = name>Score</td>
-                    <td id = score>0</td>
-                </tr>
-            </tbody>
-        </table>
+
         <script type = "module" src="script.js"></script>
     </body>
 </html>

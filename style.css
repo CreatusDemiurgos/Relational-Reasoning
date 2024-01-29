@@ -5,6 +5,7 @@
 h1, h2{
     color: yellow;
     text-align: center;
+    font-size: 3vw;
 }
 p{
     font-family: "Bitter";
@@ -12,39 +13,141 @@ p{
     text-align: center;
     /*border: 5px solid blue;*/
 }
-body{
-    font-size: 8px;
-    text-shadow: #FC0 1px 0 10px;
-    background-color: black;
+
+
+nav{
+    background-color: #a7ffeb;
+    width: 16vw;
+    padding:1.8vw, 0.85vh
 }
-img{
-    max-width: 220px;
-    max-height: 220px;
-}
-button{
+
+.sidebar-top{
+    display: flex;
+    align-items: center;
     text-align: center;
-    background-color: pink;
-    text-shadow: #FFF, 1px, 0, 10px;
-    color:rgb(0, 0, 0);
-    border-radius: 100%;
-    width:60px;
-    height:60px;
 }
+.timer, .timerOn{
+    display:flex;
+    align-items: center;
+    text-align: center;
+}
+
+.timerOn{
+    padding-left: 1vw;
+}
+
+#t1{
+    display: none;
+}
+.timer input[type="checkbox"] {
+    transform: translateY(1px); /* Adjust the value as needed */
+}
+input[type="number"] {
+    background-color: transparent;
+    border-color: transparent;
+    width: 1.75vw;
+    text-align: center;
+  }
+  /* For Chrome, Safari, and Edge */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.time{
+    width: 1.5vw;
+}
+
+/* For Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.bx-chevron-up:hover, .bx-chevron-down:hover{
+    background-color: hsla(0, 0%, 80%, 0.5);
+}
+
+
+main{
+    flex-grow:1;
+    display:inline-block;
+    justify-content: center;
+    align-items: center;
+}
+main > div {
+    text-align: center; /* Center text horizontally */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items horizontally */
+    justify-content: center;
+    height:100vh;
+}
+
+
+#timer, #countdown{
+    color:#FFF;
+}
+span.icons{
+    font-size: 3vw;
+}
+
+#statement{
+    font-size: 1.5vw;
+}
+
+body{
+    
+    background-color: #2d2d2d;
+}
+
+.center-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}   
+
+button{
+    background-image: linear-gradient(92.88deg, #455EB5 9.16%, #5643CC 43.89%, #673FD7 64.72%);
+    border-radius: 8px;
+    border-style: none;
+    box-sizing: border-box;
+    color: #ffffff;
+    cursor: pointer;
+    flex-shrink: 0;
+    font-family: "Inter UI","SF Pro Display",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif;
+    font-size: 1.25rem;
+    font-weight: 500;
+    height: 3rem;
+    width:5rem;
+    text-align: center;
+    text-shadow: rgba(0, 0, 0, 0.25) 0 3px 8px;
+    transition: all .5s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+
+  button:hover {
+    box-shadow: rgba(80, 63, 205, 0.5) 0 1px 30px;
+    transition-duration: .1s;
+  }
+  
 
 table{
     background-color: white;
-    font-size:20px;
+    font-size:1vw;
 }
 td, th{
     border:1px solid black;
 }
 
 
-.bottom-left{
-    position:absolute;
-    bottom:0;
-    left:0;
-}
+.bottom-left {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+  }
 
 #button1{
     position: fixed;
@@ -99,4 +202,19 @@ td, th{
 .col-11 {width: 91.66%;}
 .col-12 {width: 100%;}
 
+#introPage{
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    position: fixed; /* or 'absolute' */
+    top: 0;
+    left: 0;
+}
+#bt{
+    text-shadow: #FC0 1px 0 10px;
+}
+
+.hidden{
+    display:none;
+}
 

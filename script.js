@@ -27,6 +27,12 @@ let displayRandomComparison;
 let colorChoosen;
 let colorChoosen2;
 
+var introPage = document.getElementById("introPage");
+var bt = document.getElementById("bt");
+
+let countdownTime = 10;
+let countdownInterval;
+
 const shapeGenerator = new ShapeGenerator();
 
 const shapeGenerators = [ 
@@ -240,9 +246,8 @@ function trueOrFalse(phraseChoosen, phraseType){
 //This lines of code are going to be run when the full page loads, they  ask for the username (useful for the future when I need to store data and link it with a
 // user) and they display the  first shapes
 displayRandomShape();
-var userInput = 0;
-userInput = prompt("Enter your username");
-tableName.textContent = userInput;
+document.getElementById('myCheckbox').checked = false;
+
 
 
 
@@ -256,3 +261,110 @@ function handleButtonClick(buttonClicked){
 
 document.getElementById("falseBtn").addEventListener("click", function(){handleButtonClick(2)});
 document.getElementById("trueBtn").addEventListener("click", function(){handleButtonClick(1)}); 
+document.addEventListener("keydown", function(event){
+    if(event.key === "l"){
+        handleButtonClick(2);
+    }else if(event.key === "a"){
+        handleButtonClick(1);
+    }
+});
+
+document.getElementById('myCheckbox').addEventListener("click", function(){
+    if(document.getElementById('myCheckbox').checked === false){
+        document.getElementById("t1").style.display = "none";
+        document.querySelectorAll('.auto-select').forEach(function(input) {
+            input.value = 0;
+        });
+    }else if(document.getElementById('myCheckbox').checked === true){
+        document.getElementById("t1").style.display = "flex";
+    }
+})
+
+
+function incrementChev(myInput, maxValue){
+    if(myInput.value < parseInt(maxValue)){
+        myInput.value = parseInt(myInput.value) + 1;
+    }   
+}   
+function decreaseChev(myInput){
+    if(myInput.value > 0){
+        myInput.value = parseInt(myInput.value) - 1;
+    }
+}
+
+function maxValue(e, number){
+    let value;
+    if(parseInt(e.target.value) != 0){
+        value = e.target.value.replace(/^0+/, '');
+    }else{
+        value = e.target.value;
+    }
+    if (parseInt(value) > parseInt(number)) {
+        e.target.value = 0;
+    } else {
+        e.target.value = value;
+    }
+}
+
+document.getElementById("exit").addEventListener("click", function(){
+    countdownTime = 0;
+    bt.style.display = "none";
+    introPage.style.display = "flex";
+});
+
+document.getElementById("chevronUpH").addEventListener("click", function(){incrementChev(document.getElementById("inputH"), 23)});
+document.getElementById("chevronDownH").addEventListener("click", function(){decreaseChev(document.getElementById("inputH"))});
+
+document.getElementById("chevronUpM").addEventListener("click", function(){incrementChev(document.getElementById("inputM"), 56)});
+document.getElementById("chevronDownM").addEventListener("click", function(){decreaseChev(document.getElementById("inputM"))});
+
+document.getElementById("chevronUpS").addEventListener("click", function(){incrementChev(document.getElementById("inputS"), 59)});
+document.getElementById("chevronDownS").addEventListener("click", function(){decreaseChev(document.getElementById("inputS"))});
+
+document.getElementById('inputH').addEventListener('input', function (e) { maxValue(e, 23);});
+document.getElementById('inputM').addEventListener('input', function (e) { maxValue(e, 59);});
+document.getElementById('inputS').addEventListener('input', function (e) { maxValue(e, 59);});
+
+document.querySelectorAll('.auto-select').forEach(function (input) {
+    input.addEventListener('focus', function (e) {
+        e.target.select();
+    });
+});
+
+
+function countdown(){
+    countdownTime--;
+    if(countdownTime <= 0){
+        clearInterval(countdownInterval);
+        bt.style.display = "none";
+        introPage.style.display = "flex";
+    }
+}
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    
+    // Get references to the intro page and web app
+  
+    // Get reference to the start button
+    var startBtn = document.getElementById("startBtn");
+  
+    // Add click event listener to the start button
+    document.getElementById("startBtn").addEventListener("click", function(){
+        console.log("Button clicked!");
+        var userInput = 0;
+        userInput = prompt("Enter your username");
+        tableName.textContent = userInput;
+        introPage.style.display = "none";
+        bt.style.display = "block";
+        if(document.getElementById('myCheckbox').checked === true){
+            countdownTime = parseInt(document.getElementById("inputH").value)*60*60 + parseInt(document.getElementById("inputM").value)*60 + parseInt(document.getElementById("inputS").value); 
+            countdownInterval = setInterval(countdown, 1000);   
+        }
+        
+        
+    });
+  });
+  
+
+
