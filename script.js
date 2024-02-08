@@ -1,4 +1,5 @@
 import ShapeGenerator from './functions/shapeGenerator.js';
+import UserScore from './functions/userScore.js';
 
 const canvas = document.getElementById("canvas1");
 const cntx = canvas.getContext("2d");
@@ -34,6 +35,9 @@ let countdownTime = 10;
 let countdownInterval;
 
 const shapeGenerator = new ShapeGenerator();
+const userScore = new UserScore("dataBase", "objScore");
+userScore.createDatabase();
+
 
 const shapeGenerators = [ 
     shapeGenerator.makeTriangle.bind(shapeGenerator),
@@ -338,6 +342,18 @@ function countdown(){
         clearInterval(countdownInterval);
         bt.style.display = "none";
         introPage.style.display = "flex";
+        const newItem = {
+            name: score,
+        };
+        userScore.addItem(newItem); // Wait for the item to be added
+        let latestScore = document.getElementById("latestScore");
+        userScore.getLatestElement().then((latestElement) => {
+            latestScore.textContent = `LATEST SCORE: ${latestElement ? latestElement.name : 'No scores yet'}`;
+        }).catch((error) => {
+            console.error('Failed to fetch the latest score:', error);
+            latestScore.textContent = "Failed to fetch the latest score.";
+        });
+        
     }
 }
 

@@ -11,7 +11,6 @@ p{
     font-family: "Bitter";
     color: white;
     text-align: center;
-    /*border: 5px solid blue;*/
 }
 
 
@@ -40,7 +39,7 @@ nav{
     display: none;
 }
 .timer input[type="checkbox"] {
-    transform: translateY(1px); /* Adjust the value as needed */
+    transform: translateY(1px); 
 }
 input[type="number"] {
     background-color: transparent;
@@ -48,7 +47,7 @@ input[type="number"] {
     width: 1.75vw;
     text-align: center;
   }
-  /* For Chrome, Safari, and Edge */
+
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -76,14 +75,22 @@ main{
     align-items: center;
 }
 main > div {
-    text-align: center; /* Center text horizontally */
+    text-align: center; 
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center items horizontally */
+    align-items: center; 
     justify-content: center;
     height:100vh;
 }
 
+.top-right {
+    position: absolute;
+    top: 0; 
+    right: 0; 
+    margin: 0; 
+    padding: 1vw; 
+    color:aquamarine;
+}
 
 #timer, #countdown{
     color:#FFF;
