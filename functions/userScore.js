@@ -16,7 +16,6 @@ class UserScore {
             };
             request.onupgradeneeded = (event) => {
                 this.db = event.target.result;
-                this.db.deleteObjectStore(this.storeName);
                 this.db.createObjectStore(this.storeName, { autoIncrement:true });
 
             };
