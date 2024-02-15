@@ -16,9 +16,11 @@ const cntx3 = canvas3.getContext("2d");
 canvas3.width= innerWidth/4;
 canvas3.height= innerWidth/4;
 
-const tableScore = document.getElementById("score");
-const tableName = document.getElementById("name");
+
+
+
 let score = 0;
+let scoreNav = document.getElementById("scoreNav");
 
 let randomIndexPhrase;
 let randomIndexOneCanvas;
@@ -31,13 +33,16 @@ let colorChoosen2;
 var introPage = document.getElementById("introPage");
 var bt = document.getElementById("bt");
 
-let countdownTime = 10;
+let countdownTime;
+let actualTime;
 let countdownInterval;
 
 const shapeGenerator = new ShapeGenerator();
 const userScore = new UserScore("dataBase", "objScore");
 userScore.createDatabase();
 
+let correctSound = new Audio("./assets/correct.wav");
+let wrongSound = new Audio("./assets/wrong.wav");
 
 const shapeGenerators = [ 
     shapeGenerator.makeTriangle.bind(shapeGenerator),
@@ -120,10 +125,10 @@ function comparisons(buttonClicked){
     }
     if(buttonClicked === statementVeracity){
         score += 1;
-        tableScore.textContent = score;
+        correctSound.play();
     }else{
         score -= 1;
-        tableScore.textContent = score;
+        wrongSound.play();
     }
 }
 
@@ -342,45 +347,56 @@ function countdown(){
         clearInterval(countdownInterval);
         bt.style.display = "none";
         introPage.style.display = "flex";
+        const scorePerSec = (score/actualTime).toFixed(2); 
         const newItem = {
             name: score,
+            time: actualTime,
+            scorePerSec: scorePerSec,
         };
-        userScore.addItem(newItem); // Wait for the item to be added
-        let latestScore = document.getElementById("latestScore");
-        userScore.getLatestElement().then((latestElement) => {
-            latestScore.textContent = `LATEST SCORE: ${latestElement ? latestElement.name : 'No scores yet'}`;
-        }).catch((error) => {
-            console.error('Failed to fetch the latest score:', error);
-            latestScore.textContent = "Failed to fetch the latest score.";
-        });
-        
+        userScore.addItem(newItem); 
+        userScore.allScores();
     }
 }
 
 
 document.addEventListener("DOMContentLoaded", function () {
     
-    // Get references to the intro page and web app
-  
-    // Get reference to the start button
     var startBtn = document.getElementById("startBtn");
   
-    // Add click event listener to the start button
     document.getElementById("startBtn").addEventListener("click", function(){
-        console.log("Button clicked!");
-        var userInput = 0;
-        userInput = prompt("Enter your username");
-        tableName.textContent = userInput;
         introPage.style.display = "none";
         bt.style.display = "block";
         if(document.getElementById('myCheckbox').checked === true){
             countdownTime = parseInt(document.getElementById("inputH").value)*60*60 + parseInt(document.getElementById("inputM").value)*60 + parseInt(document.getElementById("inputS").value); 
+            actualTime = countdownTime;
             countdownInterval = setInterval(countdown, 1000);   
-        }
-        
-        
+        } 
     });
   });
   
 
+let chevronClicked = false;
+let distanceFromRight = document.getElementById("main").offsetWidth/10;
+document.getElementById("latestScore").addEventListener("click", function(){
+    if(chevronClicked === false){
+        document.getElementById("startBtn").disabled = true;
+        document.getElementById("main").style.filter = "blur(0.3vw)";            
+        this.style.right = distanceFromRight + "px";
+        chevronClicked = true;
+          
+        scoreNav.style.width = distanceFromRight + "px";
+        let currentWidth = parseFloat(scoreNav.style.width);
+        let newDivWidth = currentWidth - currentWidth / 5;
+        Array.from(scoreNav.children).forEach(child => { 
+            child.style.width = newDivWidth + "px";
+        });
+        }else{
+            document.getElementById("startBtn").disabled = false;
+            document.getElementById("main").style.filter = "blur(0vw)";
+            document.getElementById("scoreNav").style.width = "0px";
+            chevronClicked = false;
+            this.style.right = "0";
+        }
+});
 
+userScore.allScores();
