@@ -5,19 +5,14 @@ const canvas = document.getElementById("canvas1");
 const cntx = canvas.getContext("2d");
 canvas.width= innerWidth/4;
 canvas.height= innerWidth/4;
-
 const canvas2 = document.getElementById("canvas2");
 const cntx2 = canvas2.getContext("2d");
 canvas2.width= innerWidth/4;
 canvas2.height= innerWidth/4;
-
 const canvas3 = document.getElementById("canvas3");
 const cntx3 = canvas3.getContext("2d");
 canvas3.width= innerWidth/4;
 canvas3.height= innerWidth/4;
-
-
-
 
 let score = 0;
 let scoreNav = document.getElementById("scoreNav");
@@ -36,6 +31,11 @@ var bt = document.getElementById("bt");
 let countdownTime;
 let actualTime;
 let countdownInterval;
+
+let XClicked = false;
+
+let chevronClicked = false;
+let distanceFromRight = document.getElementById("main").offsetWidth/10;
 
 const shapeGenerator = new ShapeGenerator();
 const userScore = new UserScore("dataBase", "objScore");
@@ -89,6 +89,8 @@ const colorComparisons = [
     "have the same color as "
 ];
 
+//Definition: 1st2nd = The sentence is phrased in such a way that the first object is the one on the left and the second one is the one on the right
+
 
 function comparisons(buttonClicked){
     let statementVeracity;
@@ -134,22 +136,24 @@ function comparisons(buttonClicked){
 
 
 function displayRandomShape(){
+    // randomIndex is used to select a shape
+    cntx.clearRect(0, 0, canvas.width, canvas.height);
+    cntx2.clearRect(0, 0, canvas2.width, canvas2.height);
+    cntx3.clearRect(0, 0, canvas3.width, canvas3.height);
     displayRandomComparison = Math.floor(Math.random() * 2);
     const randomIndex = Math.floor(Math.random() * shapeGenerators.length);
     let randomIndex2;
     do {
         randomIndex2 = Math.floor(Math.random() * shapeGenerators.length);
-      } while (randomIndex2 === randomIndex);
+      } while (randomIndex2 === randomIndex);//needed to not compare the same shape, added for later
     randomPhraseTypeChooser = Math.floor(Math.random() * 2);
     let finalPhrase;
     if(displayRandomComparison === 0){
-        cntx.clearRect(0, 0, canvas.width, canvas.height);
-        cntx2.clearRect(0, 0, canvas2.width, canvas2.height);
-        cntx3.clearRect(0, 0, canvas3.width, canvas3.height);
+        
         colorChoosen = shapeGenerators[randomIndex](cntx, canvas.width, canvas.height, 1);
         colorChoosen2 = shapeGenerators[randomIndex2](cntx2, canvas2.width, canvas2.height, 1);
         if(colorChoosen[1] === colorChoosen2[1]){
-            randomPhraseTypeChooser = 2 + Math.floor(Math.random() * 2);
+            randomPhraseTypeChooser = 2 + Math.floor(Math.random() * 2);//the 2 and 3 phrase types compare color
             randomIndexColorPhrase = Math.floor(Math.random() * colorComparisons.length);
         }else{
             randomPhraseTypeChooser = Math.floor(Math.random() * 2);
@@ -170,9 +174,6 @@ function displayRandomShape(){
                 break;
         }
     }else if(displayRandomComparison === 1){
-        cntx.clearRect(0, 0, canvas.width, canvas.height);
-        cntx2.clearRect(0, 0, canvas2.width, canvas2.height);
-        cntx3.clearRect(0, 0, canvas3.width, canvas3.height);
         colorChoosen = shapeGenerators[randomIndex](cntx3, canvas3.width, canvas3.height, 1);
         colorChoosen2 = shapeGenerators[randomIndex2](cntx3, canvas3.width, canvas3.height, 3);
         if(colorChoosen[1] === colorChoosen2[1]){
@@ -202,6 +203,7 @@ function displayRandomShape(){
 }
 
 function colorComparison(shadeFirstShape, shadeSecondShape, phraseChoosen, phraseNumber){
+    //1 = true, 2 = false. This will then be compared to what the user have choosen by clicking the buttons in the comparisons function
     if(phraseNumber === 4){
         if((shadeFirstShape === shadeSecondShape)){
             return 1;
@@ -268,15 +270,6 @@ function handleButtonClick(buttonClicked){
     
 }
 
-document.getElementById("falseBtn").addEventListener("click", function(){handleButtonClick(2)});
-document.getElementById("trueBtn").addEventListener("click", function(){handleButtonClick(1)}); 
-document.addEventListener("keydown", function(event){
-    if(event.key === "l"){
-        handleButtonClick(2);
-    }else if(event.key === "a"){
-        handleButtonClick(1);
-    }
-});
 
 document.getElementById('myCheckbox').addEventListener("click", function(){
     if(document.getElementById('myCheckbox').checked === false){
@@ -301,7 +294,7 @@ function decreaseChev(myInput){
     }
 }
 
-function maxValue(e, number){
+function chevMaxValue(e, number){
     let value;
     if(parseInt(e.target.value) != 0){
         value = e.target.value.replace(/^0+/, '');
@@ -315,24 +308,61 @@ function maxValue(e, number){
     }
 }
 
+function countdown(){
+    countdownTime--;
+    if(countdownTime <= 0){
+        clearInterval(countdownInterval);
+        bt.style.display = "none";
+        introPage.style.display = "flex";
+        if(XClicked === false){
+            const scorePerSec = (score/actualTime).toFixed(2); 
+            const newItem = {
+                name: score,
+                time: actualTime,
+                scorePerSec: scorePerSec,
+            };
+            userScore.addItem(newItem); 
+            userScore.allScores();
+        }else{ XClicked = false;}
+        
+    }
+}
+
+
 document.getElementById("exit").addEventListener("click", function(){
+    //This is used to exit if you have untimed on or you want to finish early. The score will not be saved in either case
+    XClicked = true;
     countdownTime = 0;
     bt.style.display = "none";
     introPage.style.display = "flex";
 });
 
+document.getElementById("falseBtn").addEventListener("click", function(){handleButtonClick(2)});
+document.getElementById("trueBtn").addEventListener("click", function(){handleButtonClick(1)}); 
+document.addEventListener("keydown", function(event){
+    //L and A to answer, where L is false and A is true
+    if(event.key === "l"){
+        handleButtonClick(2);
+    }else if(event.key === "a"){
+        handleButtonClick(1);
+    }
+});
+
+
+//following code is used to change the gameplay time with the up and down arrows
 document.getElementById("chevronUpH").addEventListener("click", function(){incrementChev(document.getElementById("inputH"), 23)});
 document.getElementById("chevronDownH").addEventListener("click", function(){decreaseChev(document.getElementById("inputH"))});
 
-document.getElementById("chevronUpM").addEventListener("click", function(){incrementChev(document.getElementById("inputM"), 56)});
+document.getElementById("chevronUpM").addEventListener("click", function(){incrementChev(document.getElementById("inputM"), 59)});
 document.getElementById("chevronDownM").addEventListener("click", function(){decreaseChev(document.getElementById("inputM"))});
 
 document.getElementById("chevronUpS").addEventListener("click", function(){incrementChev(document.getElementById("inputS"), 59)});
 document.getElementById("chevronDownS").addEventListener("click", function(){decreaseChev(document.getElementById("inputS"))});
 
-document.getElementById('inputH').addEventListener('input', function (e) { maxValue(e, 23);});
-document.getElementById('inputM').addEventListener('input', function (e) { maxValue(e, 59);});
-document.getElementById('inputS').addEventListener('input', function (e) { maxValue(e, 59);});
+
+document.getElementById('inputH').addEventListener('input', function (e) { chevMaxValue(e, 23);});
+document.getElementById('inputM').addEventListener('input', function (e) { chevMaxValue(e, 59);});
+document.getElementById('inputS').addEventListener('input', function (e) { chevMaxValue(e, 59);});
 
 document.querySelectorAll('.auto-select').forEach(function (input) {
     input.addEventListener('focus', function (e) {
@@ -341,28 +371,11 @@ document.querySelectorAll('.auto-select').forEach(function (input) {
 });
 
 
-function countdown(){
-    countdownTime--;
-    if(countdownTime <= 0){
-        clearInterval(countdownInterval);
-        bt.style.display = "none";
-        introPage.style.display = "flex";
-        const scorePerSec = (score/actualTime).toFixed(2); 
-        const newItem = {
-            name: score,
-            time: actualTime,
-            scorePerSec: scorePerSec,
-        };
-        userScore.addItem(newItem); 
-        userScore.allScores();
-    }
-}
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    
-    var startBtn = document.getElementById("startBtn");
-  
+    //Used to change page, from the start menu to the actual gameplay
     document.getElementById("startBtn").addEventListener("click", function(){
         introPage.style.display = "none";
         bt.style.display = "block";
@@ -375,8 +388,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   
 
-let chevronClicked = false;
-let distanceFromRight = document.getElementById("main").offsetWidth/10;
+
 document.getElementById("latestScore").addEventListener("click", function(){
     if(chevronClicked === false){
         document.getElementById("startBtn").disabled = true;
