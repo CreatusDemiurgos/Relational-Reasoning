@@ -44,6 +44,8 @@ userScore.createDatabase();
 let correctSound = new Audio("./assets/correct.wav");
 let wrongSound = new Audio("./assets/wrong.wav");
 
+let shapesToDisplay;
+
 const shapeGenerators = [ 
     shapeGenerator.makeTriangle.bind(shapeGenerator),
     shapeGenerator.makeSquare.bind(shapeGenerator),
@@ -53,7 +55,7 @@ const shapeGenerators = [
     shapeGenerator.makeCircle.bind(shapeGenerator)
 ];
 
-const shapeName = ["triangle ", "square ", "rectangle ", "pentagon ", "hexagon ", "circle "];
+const shapeName = ["triangle ", "square ", "rectangle ", "pentagon ", " hexagon ", "circle "];
 
 const twoCanvasComparisonPhrases = [
         "is west of ",
@@ -63,7 +65,7 @@ const twoCanvasComparisonPhrases = [
         "is not east of ",
         "is not west of ",
         "is not to the right of ",
-        "is not the left of "      
+        "is not to the left of "      
 ];
 
 const oneCanvasComparisonPhrases = [
@@ -77,7 +79,7 @@ const oneCanvasComparisonPhrases = [
     "is encapsulated by ",
     "is bounding ",
     "is bounded by ",
-    "is not encompassed by",
+    "is not encompassed by ",
     "is not encompassing ",
 ];
 
@@ -149,7 +151,6 @@ function displayRandomShape(){
     randomPhraseTypeChooser = Math.floor(Math.random() * 2);
     let finalPhrase;
     if(displayRandomComparison === 0){
-        
         colorChoosen = shapeGenerators[randomIndex](cntx, canvas.width, canvas.height, 1);
         colorChoosen2 = shapeGenerators[randomIndex2](cntx2, canvas2.width, canvas2.height, 1);
         if(colorChoosen[1] === colorChoosen2[1]){
@@ -371,7 +372,14 @@ document.querySelectorAll('.auto-select').forEach(function (input) {
 });
 
 
-
+document.getElementById("checkbox2").addEventListener("click", function(){
+    document.getElementById("checkbox3").checked = false;
+    shapesToDisplay = 2;
+});
+document.getElementById("checkbox3").addEventListener("click", function(){
+    document.getElementById("checkbox2").checked = false;
+    shapesToDisplay = 3;
+});
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -411,4 +419,7 @@ document.getElementById("latestScore").addEventListener("click", function(){
         }
 });
 
+//document.getElementById("checkbox2").checked = true;
+
 userScore.allScores();
+
