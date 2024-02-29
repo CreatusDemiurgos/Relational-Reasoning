@@ -2,13 +2,39 @@
     box-sizing: border-box;
 }
 
+body{
+    font-family: "Zilla Slab", serif;
+    font-weight: 300;
+    font-style: normal;
+    background-color: #000000;
+    
+}
+
+/* #stVertEl{
+    transform: translateY(50%);
+}
+#ndVertEl{
+    transform: translateY(50%);
+} */
+
+
+#animate{
+    width: calc(371 * 0.05vw);
+    height: calc(245 * 0.05vw);
+    stroke-dasharray: 10;
+}
+
 h1, h2{
-    color: yellow;
+    color: #69a758;
     text-align: center;
     font-size: 3vw;
 }
 h3{
     font-size:1.2vw;
+    color:#2d593c;
+}
+h4{
+    color:#2d593c;
 }
 p{
     color: white;
@@ -17,8 +43,8 @@ p{
 
 
 nav{
-    background-color: #a7ffeb;
-    width: 16vw;
+    background-color: #03DAC6;
+    width: 0vw;
     padding:1.8vw, 0.85vh;
 }
 
@@ -48,6 +74,12 @@ nav{
 }
 .timer, .timerOn{
     display:flex;
+    align-items: center;
+    text-align: center;
+}
+
+#shapes{
+    display:block;
     align-items: center;
     text-align: center;
 }
@@ -88,6 +120,9 @@ input[type="number"] {
     background-color: hsla(0, 0%, 80%, 0.5);
 }
 
+.bx-brain{
+    font-size: 6vw;
+}
 
 main{
     flex-grow:1;
@@ -129,12 +164,7 @@ span.icons{
     font-size: 1.5vw;
 }
 
-body{
-    font-family: "Zilla Slab", serif;
-    font-weight: 300;
-    font-style: normal;
-    background-color: #2d2d2d;
-}
+
 
 .center-container{
     display: flex;
@@ -238,12 +268,76 @@ button{
     position: fixed; /* or 'absolute' */
     top: 0;
     left: 0;
+    justify-content: center;
+    align-items: center;
 }
 #bt{
     text-shadow: #FC0 1px 0 10px;
+}
+#center{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .hidden{
     display:none;
 }
 
+.bx-chevron-down{
+    color:#FFFFFF
+}
+.bx-chevron-up{
+    color:#2d593c;
+}
+#boxIcons{
+    color:white;
+}
+
+.bxs-shapes{
+    font-size: 3.5vw;
+    position:absolute;
+    left:0;
+    bottom:0;
+    padding-bottom: 0.3vw;
+}
+
+.bx-spreadsheet{
+    font-size: 3.5vw;
+    position: absolute;
+    left:5vw;
+    top:5.4vw;
+}
+
+.bx-time-five{
+    font-size: 3.5vw;
+    position:absolute;
+    right:0;
+    top:0;
+    padding-right:0.3vw;
+}
+
+#quarterCircle{
+    position:absolute;
+    top:-2px;
+    left:-2px;
+    width:12vw;
+    height:12vw;
+    border-style: solid;
+    border-width: 2px;
+    border-color: white;
+    border-bottom-right-radius: 100%;
+}
+#quarterCircle::before{
+    content: "";
+    position: absolute;
+    top:-2px;
+    left: -2px;
+    width:8vw;
+    height:8vw;
+    border-style: solid;
+    border-width: 2px;
+    border-color: white;
+    border-bottom-right-radius: 100%;
+}

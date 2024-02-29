@@ -6,7 +6,7 @@ class ShapeGenerator {
             "#fa8c8c", //light red and pink
             "#c90004", //somewhat red
             "#fffe00", //light yellow
-            "#b98d00", //dark yellow?
+            "#b98d00", //dark yellow
             "#1afe01", //light green/lime
             "#0b6d01" //dark greens
         ];

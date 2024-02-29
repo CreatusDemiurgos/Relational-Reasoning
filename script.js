@@ -1,5 +1,6 @@
 import ShapeGenerator from './functions/shapeGenerator.js';
 import UserScore from './functions/userScore.js';
+import anime from './functions/anime.es.js'
 
 const canvas = document.getElementById("canvas1");
 const cntx = canvas.getContext("2d");
@@ -35,7 +36,7 @@ let countdownInterval;
 let XClicked = false;
 
 let chevronClicked = false;
-let distanceFromRight = document.getElementById("main").offsetWidth/10;
+// let distanceFromRight = document.getElementById("main").offsetWidth/10;
 
 const shapeGenerator = new ShapeGenerator();
 const userScore = new UserScore("dataBase", "objScore");
@@ -258,7 +259,7 @@ function trueOrFalse(phraseChoosen, phraseType){
 //This lines of code are going to be run when the full page loads, they  ask for the username (useful for the future when I need to store data and link it with a
 // user) and they display the  first shapes
 displayRandomShape();
-document.getElementById('myCheckbox').checked = false;
+// document.getElementById('myCheckbox').checked = false;
 
 
 
@@ -272,16 +273,16 @@ function handleButtonClick(buttonClicked){
 }
 
 
-document.getElementById('myCheckbox').addEventListener("click", function(){
-    if(document.getElementById('myCheckbox').checked === false){
-        document.getElementById("t1").style.display = "none";
-        document.querySelectorAll('.auto-select').forEach(function(input) {
-            input.value = 0;
-        });
-    }else if(document.getElementById('myCheckbox').checked === true){
-        document.getElementById("t1").style.display = "flex";
-    }
-})
+// document.getElementById('myCheckbox').addEventListener("click", function(){
+//     if(document.getElementById('myCheckbox').checked === false){
+//         document.getElementById("t1").style.display = "none";
+//         document.querySelectorAll('.auto-select').forEach(function(input) {
+//             input.value = 0;
+//         });
+//     }else if(document.getElementById('myCheckbox').checked === true){
+//         document.getElementById("t1").style.display = "flex";
+//     }
+// })
 
 
 function incrementChev(myInput, maxValue){
@@ -351,35 +352,35 @@ document.addEventListener("keydown", function(event){
 
 
 //following code is used to change the gameplay time with the up and down arrows
-document.getElementById("chevronUpH").addEventListener("click", function(){incrementChev(document.getElementById("inputH"), 23)});
-document.getElementById("chevronDownH").addEventListener("click", function(){decreaseChev(document.getElementById("inputH"))});
+// document.getElementById("chevronUpH").addEventListener("click", function(){incrementChev(document.getElementById("inputH"), 23)});
+// document.getElementById("chevronDownH").addEventListener("click", function(){decreaseChev(document.getElementById("inputH"))});
 
-document.getElementById("chevronUpM").addEventListener("click", function(){incrementChev(document.getElementById("inputM"), 59)});
-document.getElementById("chevronDownM").addEventListener("click", function(){decreaseChev(document.getElementById("inputM"))});
+// document.getElementById("chevronUpM").addEventListener("click", function(){incrementChev(document.getElementById("inputM"), 59)});
+// document.getElementById("chevronDownM").addEventListener("click", function(){decreaseChev(document.getElementById("inputM"))});
 
-document.getElementById("chevronUpS").addEventListener("click", function(){incrementChev(document.getElementById("inputS"), 59)});
-document.getElementById("chevronDownS").addEventListener("click", function(){decreaseChev(document.getElementById("inputS"))});
-
-
-document.getElementById('inputH').addEventListener('input', function (e) { chevMaxValue(e, 23);});
-document.getElementById('inputM').addEventListener('input', function (e) { chevMaxValue(e, 59);});
-document.getElementById('inputS').addEventListener('input', function (e) { chevMaxValue(e, 59);});
-
-document.querySelectorAll('.auto-select').forEach(function (input) {
-    input.addEventListener('focus', function (e) {
-        e.target.select();
-    });
-});
+// document.getElementById("chevronUpS").addEventListener("click", function(){incrementChev(document.getElementById("inputS"), 59)});
+// document.getElementById("chevronDownS").addEventListener("click", function(){decreaseChev(document.getElementById("inputS"))});
 
 
-document.getElementById("checkbox2").addEventListener("click", function(){
-    document.getElementById("checkbox3").checked = false;
-    shapesToDisplay = 2;
-});
-document.getElementById("checkbox3").addEventListener("click", function(){
-    document.getElementById("checkbox2").checked = false;
-    shapesToDisplay = 3;
-});
+// document.getElementById('inputH').addEventListener('input', function (e) { chevMaxValue(e, 23);});
+// document.getElementById('inputM').addEventListener('input', function (e) { chevMaxValue(e, 59);});
+// document.getElementById('inputS').addEventListener('input', function (e) { chevMaxValue(e, 59);});
+
+// document.querySelectorAll('.auto-select').forEach(function (input) {
+//     input.addEventListener('focus', function (e) {
+//         e.target.select();
+//     });
+// });
+
+
+// document.getElementById("checkbox2").addEventListener("click", function(){
+//     document.getElementById("checkbox3").checked = false;
+//     shapesToDisplay = 2;
+// });
+// document.getElementById("checkbox3").addEventListener("click", function(){
+//     document.getElementById("checkbox2").checked = false;
+//     shapesToDisplay = 3;
+// });
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -397,29 +398,37 @@ document.addEventListener("DOMContentLoaded", function () {
   
 
 
-document.getElementById("latestScore").addEventListener("click", function(){
-    if(chevronClicked === false){
-        document.getElementById("startBtn").disabled = true;
-        document.getElementById("main").style.filter = "blur(0.3vw)";            
-        this.style.right = distanceFromRight + "px";
-        chevronClicked = true;
+// document.getElementById("latestScore").addEventListener("click", function(){
+//     if(chevronClicked === false){
+//         document.getElementById("startBtn").disabled = true;
+//         document.getElementById("main").style.filter = "blur(0.3vw)";            
+//         this.style.right = distanceFromRight + "px";
+//         chevronClicked = true;
           
-        scoreNav.style.width = distanceFromRight + "px";
-        let currentWidth = parseFloat(scoreNav.style.width);
-        let newDivWidth = currentWidth - currentWidth / 5;
-        Array.from(scoreNav.children).forEach(child => { 
-            child.style.width = newDivWidth + "px";
-        });
-        }else{
-            document.getElementById("startBtn").disabled = false;
-            document.getElementById("main").style.filter = "blur(0vw)";
-            document.getElementById("scoreNav").style.width = "0px";
-            chevronClicked = false;
-            this.style.right = "0";
-        }
-});
+//         scoreNav.style.width = distanceFromRight + "px";
+//         let currentWidth = parseFloat(scoreNav.style.width);
+//         let newDivWidth = currentWidth - currentWidth / 5;
+//         Array.from(scoreNav.children).forEach(child => { 
+//             child.style.width = newDivWidth + "px";
+//         });
+//         }else{
+//             document.getElementById("startBtn").disabled = false;
+//             document.getElementById("main").style.filter = "blur(0vw)";
+//             document.getElementById("scoreNav").style.width = "0px";
+//             chevronClicked = false;
+//             this.style.right = "0";
+//         }
+// });
 
 //document.getElementById("checkbox2").checked = true;
 
 userScore.allScores();
 
+anime({
+    targets: '#animate path',
+    strokeDashoffset: [anime.setDashoffset, 0],
+    easing: 'easeInOutSine',
+    duration: 5000,
+    direction: 'alternate',
+    loop: true
+  });
