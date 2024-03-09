@@ -41,6 +41,24 @@ p{
     text-align: center;
 }
 
+#clock{
+    display: none;
+    border-radius: 2%;
+    border-style: solid;
+    border-color: white;
+    width: 30vw;
+    height: 15vw;
+    position:absolute;
+    background-color: #141414;
+}
+
+#main{
+    display:flex;
+    width: 100vw;
+    height:100vh;
+    justify-content: center;
+    align-items: center;
+}
 
 nav{
     background-color: #03DAC6;
@@ -97,8 +115,10 @@ nav{
 input[type="number"] {
     background-color: transparent;
     border-color: transparent;
-    width: 1.75vw;
+    width : 7.5vw;
     text-align: center;
+    color: white;
+    font-size: 5vw;
   }
 
 input[type="number"]::-webkit-outer-spin-button,
@@ -116,9 +136,9 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-.bx-chevron-up:hover, .bx-chevron-down:hover{
+/* .bx-chevron-up:hover, .bx-chevron-down:hover{
     background-color: hsla(0, 0%, 80%, 0.5);
-}
+} */
 
 .bx-brain{
     font-size: 6vw;
@@ -198,7 +218,13 @@ button{
     transition-duration: .1s;
   }
   
-
+#hour, #minutes, #seconds{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 5vw;
+}
 
 
 
@@ -286,10 +312,10 @@ button{
 }
 
 .bx-chevron-down{
-    color:#FFFFFF
+    color:#808080;
 }
 .bx-chevron-up{
-    color:#2d593c;
+    color:#808080;
 }
 #boxIcons{
     color:white;

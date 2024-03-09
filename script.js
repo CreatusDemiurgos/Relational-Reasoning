@@ -308,6 +308,9 @@ function chevMaxValue(e, number){
     } else {
         e.target.value = value;
     }
+    if(parseInt(e.target.value) === 0){
+        e.target.value = 0;
+    }
 }
 
 function countdown(){
@@ -350,27 +353,54 @@ document.addEventListener("keydown", function(event){
     }
 });
 
+let clock = document.getElementById("clock");
+let visible = 0;
+let hours;
+let minutes;
+let seconds;
 
-//following code is used to change the gameplay time with the up and down arrows
-// document.getElementById("chevronUpH").addEventListener("click", function(){incrementChev(document.getElementById("inputH"), 23)});
-// document.getElementById("chevronDownH").addEventListener("click", function(){decreaseChev(document.getElementById("inputH"))});
+document.getElementsByClassName("bx-time-five")[0].addEventListener("click", function(){
+    if(visible === 0){
+        clock.style.display = "flex";
+        document.getElementById("main").style.filter = "blur(2vw)";
+        let timerSubUnits = (clock.offsetWidth / 3) + "px";
+        document.getElementById("hour").style.width = timerSubUnits;
+        document.getElementById("minutes").style.width = timerSubUnits;
+        document.getElementById("seconds").style.width = timerSubUnits;        
+        visible = 1;
+    }else{
+        hours = parseInt(document.getElementById("inputH").value)*60*60;
+        minutes = parseInt(document.getElementById("inputM").value)*60;
+        seconds = parseInt(document.getElementById("inputS").value);
+         
+        clock.style.display = "none";
+        document.getElementById("main").style.filter = "blur(0)";
+        visible = 0;
+    }
+});
 
-// document.getElementById("chevronUpM").addEventListener("click", function(){incrementChev(document.getElementById("inputM"), 59)});
-// document.getElementById("chevronDownM").addEventListener("click", function(){decreaseChev(document.getElementById("inputM"))});
+document.getElementById("chevronUpH").addEventListener("click", function(){incrementChev(document.getElementById("inputH"), 23)});
+document.getElementById("chevronDownH").addEventListener("click", function(){decreaseChev(document.getElementById("inputH"))});
 
-// document.getElementById("chevronUpS").addEventListener("click", function(){incrementChev(document.getElementById("inputS"), 59)});
-// document.getElementById("chevronDownS").addEventListener("click", function(){decreaseChev(document.getElementById("inputS"))});
+document.getElementById("chevronUpM").addEventListener("click", function(){incrementChev(document.getElementById("inputM"), 59)});
+document.getElementById("chevronDownM").addEventListener("click", function(){decreaseChev(document.getElementById("inputM"))});
+
+document.getElementById("chevronUpS").addEventListener("click", function(){incrementChev(document.getElementById("inputS"), 59)});
+document.getElementById("chevronDownS").addEventListener("click", function(){decreaseChev(document.getElementById("inputS"))});
 
 
-// document.getElementById('inputH').addEventListener('input', function (e) { chevMaxValue(e, 23);});
-// document.getElementById('inputM').addEventListener('input', function (e) { chevMaxValue(e, 59);});
-// document.getElementById('inputS').addEventListener('input', function (e) { chevMaxValue(e, 59);});
+document.getElementById('inputH').addEventListener('input', function (e) { chevMaxValue(e, 23);});
+document.getElementById('inputM').addEventListener('input', function (e) { chevMaxValue(e, 59);});
+document.getElementById('inputS').addEventListener('input', function (e) { chevMaxValue(e, 59);});
 
-// document.querySelectorAll('.auto-select').forEach(function (input) {
-//     input.addEventListener('focus', function (e) {
-//         e.target.select();
-//     });
-// });
+document.querySelectorAll('.auto-select').forEach(function (input) {
+    input.addEventListener('focus', function (e) {
+        e.target.select();
+    });
+});
+
+
+
 
 
 // document.getElementById("checkbox2").addEventListener("click", function(){
@@ -388,8 +418,8 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("startBtn").addEventListener("click", function(){
         introPage.style.display = "none";
         bt.style.display = "block";
-        if(document.getElementById('myCheckbox').checked === true){
-            countdownTime = parseInt(document.getElementById("inputH").value)*60*60 + parseInt(document.getElementById("inputM").value)*60 + parseInt(document.getElementById("inputS").value); 
+        countdownTime =  hours + minutes + seconds;
+        if(countdownTime != 0){ 
             actualTime = countdownTime;
             countdownInterval = setInterval(countdown, 1000);   
         } 
@@ -432,3 +462,7 @@ anime({
     direction: 'alternate',
     loop: true
   });
+
+
+
+
