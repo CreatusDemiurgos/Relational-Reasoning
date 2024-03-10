@@ -69,29 +69,32 @@ class UserScore {
             const transaction = this.db.transaction([this.storeName], "readonly");
             const store = transaction.objectStore(this.storeName);
             const request = store.getAll();
-            let scoreNav = document.getElementById("scoreNav");
+            let scoreTable = document.getElementById("scoreTable");
             request.onsuccess = function(event) {
                 for(let value of event.target.result) {
                     let newDiv = document.createElement("div");
                     newDiv.classList.add('scoreDiv');
                     let nameDiv = document.createElement("div");
+                    nameDiv.classList.add("subScoreDiv");
                     let nameText = document.createTextNode(`Score: ${value.name}`);
                     nameDiv.appendChild(nameText);
                     newDiv.appendChild(nameDiv);
                 
                     let timeDiv = document.createElement("div");
+                    timeDiv.classList.add("subScoreDiv");
                     let timeText = document.createTextNode(`Time: ${value.time}s`);
                     timeDiv.appendChild(timeText);
                     newDiv.appendChild(timeDiv);
                 
                     let scorePerSecDiv = document.createElement("div");
+                    scorePerSecDiv.classList.add("subScoreDiv");
                     let scorePerSecText = document.createTextNode(`Score/s: ${value.scorePerSec}`);
                     scorePerSecDiv.appendChild(scorePerSecText);
                     newDiv.appendChild(scorePerSecDiv);
-                    if(scoreNav.firstChild){
-                        scoreNav.insertBefore(newDiv, scoreNav.firstChild);
+                    if(scoreTable.firstChild){
+                        scoreTable.insertBefore(newDiv, scoreTable.firstChild);
                     }else{
-                        scoreNav.appendChild(newDiv);
+                        scoreTable.appendChild(newDiv);
                     }
                 }
             };

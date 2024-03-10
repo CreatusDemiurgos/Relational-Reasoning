@@ -354,28 +354,49 @@ document.addEventListener("keydown", function(event){
 });
 
 let clock = document.getElementById("clock");
-let visible = 0;
+let scoreTable = document.getElementById("scoreTable");
+
+let clockVisibility = 0;
+let scoreVisibility = 0;
+
 let hours;
 let minutes;
 let seconds;
 
 document.getElementsByClassName("bx-time-five")[0].addEventListener("click", function(){
-    if(visible === 0){
+    if(clockVisibility === 0){
+        scoreTable.style.display = "none";
+        scoreVisibility = 0;
+
         clock.style.display = "flex";
         document.getElementById("main").style.filter = "blur(2vw)";
         let timerSubUnits = (clock.offsetWidth / 3) + "px";
         document.getElementById("hour").style.width = timerSubUnits;
         document.getElementById("minutes").style.width = timerSubUnits;
         document.getElementById("seconds").style.width = timerSubUnits;        
-        visible = 1;
+        clockVisibility = 1;
     }else{
         hours = parseInt(document.getElementById("inputH").value)*60*60;
         minutes = parseInt(document.getElementById("inputM").value)*60;
         seconds = parseInt(document.getElementById("inputS").value);
-         
         clock.style.display = "none";
         document.getElementById("main").style.filter = "blur(0)";
-        visible = 0;
+        clockVisibility = 0;
+    }
+});
+
+document.getElementsByClassName("bx-spreadsheet")[0].addEventListener("click", function(){
+    if(scoreVisibility === 0){
+        clock.style.display = "none";
+        clockVisibility = 0;
+
+        scoreTable.style.display = "flex";
+        document.getElementById("main").style.filter = "blur(2vw)";
+        scoreVisibility = 1;
+    }else{
+        scoreTable.style.display = "none";
+        document.getElementById("main").style.filter = "blur(0vw)";
+        scoreVisibility = 0;
     }
 });
 
